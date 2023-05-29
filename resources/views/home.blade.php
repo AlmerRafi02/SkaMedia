@@ -6,38 +6,71 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{$title}}</title>
     <link rel="shortcut icon" href="">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="navigation row border-bottom">
-        <div class="col-md-2">
-            <a href="" class="navbar-brand float-start ms-5"><img src="../img/smk-pgri.jpg" style="width: 100px; height: 100px; border-radius: 50px 50px 50px 50px; padding: 10px;" alt=""></a>
-        </div>
-        <div class="col-md-1 mt-4 ms-5 p-2">
-            <a href="/" class="nav-link text-center d-flex justify-content-center ms-5"><strong>Home</strong></a>
-        </div>
-        <div class="col-md-1 mt-4 p-2">
-            <a href="" class="nav-link text-center ms-5"><strong>|</strong></a>
-        </div>
-        <div class="col-md-1 mt-4 p-2">
-            <a href="/market" class="nav-link text-center ms-5"><strong>Mart</strong></a>
-        </div>
-        <div class="col-md-1 mt-4 p-2">
-            <a href="" class="nav-link text-center ms-5"><strong>|</strong></a>
-        </div>
-        <div class="col-md-1 mt-4 ms-5 p-2">
-            <a href="/login" class="nav-link text-center float-en"><strong>Login</strong></a>
-        </div>
-        <div class="col-md-1 mt-4 p-2">
-            <a href="" class="nav-link text-center ms-5"><strong>|</strong></a>
-        </div>
-        <div class="col-md-1 ms-5 mt-4 p-2">
-            <a href="/register" class="nav-link text-center float-en"><strong>Register</strong></a>
-        </div>
+        @auth
+            <div class="col-md-2">
+                <a href="" class="navbar-brand float-start ms-5"><img src="../img/smk-pgri.jpg" style="width: 100px; height: 100px; border-radius: 50px 50px 50px 50px; padding: 10px;" alt=""></a>
+            </div>
+            <div class="col-md-1 mt-4 p-2" style="margin-left: 9rem;">
+                <a href="/" class="nav-link text-center d-flex justify-content-center ms-5"><strong>Home</strong></a>
+            </div>
+            <div class="col-md-1 mt-4 p-2">
+                <a href="" class="nav-link text-center ms-5"><strong>|</strong></a>
+            </div>
+            <div class="col-md-1 mt-4 p-2">
+                <a href="/market" class="nav-link text-center ms-5"><strong>Mart</strong></a>
+            </div>
+            <div class="col-md-1 mt-4 p-2">
+                <a href="" class="nav-link text-center ms-5"><strong>|</strong></a>
+            </div>
+            <div class="col-md-2 mt-4 p-2">
+                <a href="/mypost" class="nav-link text-center ms-5"><strong>Hallo, {{ auth()->user()->name }}</strong></a>
+            </div>
+            <div class="col-md-2 mt-3 p-2" style="margin-left: 3rem;">
+                <form action="/logout" method="post">
+                    @csrf
+                    <button type="submit" class="btn btn-danger float-end" style="border: none;"><strong>Logout <i class="bi bi-box-arrow-right"></i></strong></button>
+                </form>
+            </div>
+        @else
+            <div class="col-md-2">
+                <a href="" class="navbar-brand float-start ms-5"><img src="../img/smk-pgri.jpg" style="width: 100px; height: 100px; border-radius: 50px 50px 50px 50px; padding: 10px;" alt=""></a>
+            </div>
+            <div class="col-md-1 mt-4 ms-5 p-2">
+                <a href="/" class="nav-link text-center d-flex justify-content-center ms-5"><strong>Home</strong></a>
+            </div>
+            <div class="col-md-1 mt-4 p-2">
+                <a href="" class="nav-link text-center ms-5"><strong>|</strong></a>
+            </div>
+            <div class="col-md-1 mt-4 p-2">
+                <a href="/market" class="nav-link text-center ms-5"><strong>Mart</strong></a>
+            </div>
+            <div class="col-md-1 mt-4 p-2">
+                <a href="" class="nav-link text-center ms-5"><strong>|</strong></a>
+            </div>
+            <div class="col-md-1 mt-4 ms-5 p-2">
+                <a href="/login" class="nav-link text-center float-en"><strong>Login</strong></a>
+            </div>
+            <div class="col-md-1 mt-4 p-2">
+                <a href="" class="nav-link text-center ms-5"><strong>|</strong></a>
+            </div>
+            <div class="col-md-1 ms-5 mt-4 p-2">
+                <a href="/register" class="nav-link text-center float-en"><strong>Register</strong></a>
+            </div>
+        @endauth
     </div>
     <div id="ocean">
+        @if (session()->has('success'))
+            <div class="alert alert-success" role="alert">
+                {{  session('success')}}
+            </div>
+        @endif
     <div class="row col-md-12 ms-4">
         <div class="ms-3 mt-3 col-md-8">
             <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
@@ -120,9 +153,10 @@
                   </center>
               </div>
               <div class="card mt-3 ms-5 col-md-3 float-end shadow-sm">
+                @auth
                 <div class="row">
                     <div class="col-md-6">
-                        <a href="/news/upload" class="text-decoration-none text-dark">
+                        <a href="/news/upload/create" class="text-decoration-none text-dark">
                             <center>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-upload mt-4" viewBox="0 0 16 16">
                                     <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
@@ -132,8 +166,9 @@
                             </center>
                         </a>
                     </div>
+                    @can('admin')
                     <div class="col-md-6">
-                        <a href="" class="text-decoration-none text-dark">
+                        <a href="/news/upload" class="text-decoration-none text-dark">
                             <center>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-eye-fill mt-4" viewBox="0 0 16 16">
                                     <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
@@ -143,7 +178,16 @@
                             </center>
                         </a>
                     </div>
+                    @endcan
                 </div>
+                @else
+                <center>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-info-circle-fill mt-4" viewBox="0 0 16 16">
+                        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                    </svg>
+                    <p class="text-justify mt-4">Silahkan login/register untuk upload berita</p>
+                </center>
+                @endauth
               </div>
               <div class="card mt-3 ms-3 col-md-2 shadow-sm">
                 <center>

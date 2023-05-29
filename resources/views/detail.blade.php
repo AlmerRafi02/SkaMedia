@@ -12,30 +12,57 @@
 </head>
 <body>
     <div class="navigation row border-bottom">
-        <div class="col-md-2">
-            <a href="" class="navbar-brand float-start ms-5"><img src="../img/smk-pgri.jpg" style="width: 100px; height: 100px; border-radius: 50px 50px 50px 50px; padding: 10px;" alt=""></a>
-        </div>
-        <div class="col-md-1 mt-4 ms-5 p-2">
-            <a href="/" class="nav-link text-center d-flex justify-content-center ms-5"><strong>Home</strong></a>
-        </div>
-        <div class="col-md-1 mt-4 p-2">
-            <a href="" class="nav-link text-center ms-5"><strong>|</strong></a>
-        </div>
-        <div class="col-md-1 mt-4 p-2">
-            <a href="/market" class="nav-link text-center ms-5"><strong>Mart</strong></a>
-        </div>
-        <div class="col-md-1 mt-4 p-2">
-            <a href="" class="nav-link text-center ms-5"><strong>|</strong></a>
-        </div>
-        <div class="col-md-1 mt-4 ms-5 p-2">
-            <a href="/login" class="nav-link text-center float-en"><strong>Login</strong></a>
-        </div>
-        <div class="col-md-1 mt-4 p-2">
-            <a href="" class="nav-link text-center ms-5"><strong>|</strong></a>
-        </div>
-        <div class="col-md-1 ms-5 mt-4 p-2">
-            <a href="/register" class="nav-link text-center float-en"><strong>Register</strong></a>
-        </div>
+        @auth
+            <div class="col-md-2">
+                <a href="" class="navbar-brand float-start ms-5"><img src="../img/smk-pgri.jpg" style="width: 100px; height: 100px; border-radius: 50px 50px 50px 50px; padding: 10px;" alt=""></a>
+            </div>
+            <div class="col-md-1 mt-4 p-2" style="margin-left: 9rem;">
+                <a href="/" class="nav-link text-center d-flex justify-content-center ms-5"><strong>Home</strong></a>
+            </div>
+            <div class="col-md-1 mt-4 p-2">
+                <a href="" class="nav-link text-center ms-5"><strong>|</strong></a>
+            </div>
+            <div class="col-md-1 mt-4 p-2">
+                <a href="/market" class="nav-link text-center ms-5"><strong>Mart</strong></a>
+            </div>
+            <div class="col-md-1 mt-4 p-2">
+                <a href="" class="nav-link text-center ms-5"><strong>|</strong></a>
+            </div>
+            <div class="col-md-2 mt-4 p-2">
+                <a href="/mypost" class="nav-link text-center ms-5"><strong>Hallo, {{ auth()->user()->name }}</strong></a>
+            </div>
+            <div class="col-md-2 mt-3 p-2" style="margin-left: 3rem;">
+                <form action="/logout" method="post">
+                    @csrf
+                    <button type="submit" class="btn btn-danger float-end" style="border: none;"><strong>Logout <i class="bi bi-box-arrow-right"></i></strong></button>
+                </form>
+            </div>
+        @else
+            <div class="col-md-2">
+                <a href="" class="navbar-brand float-start ms-5"><img src="../img/smk-pgri.jpg" style="width: 100px; height: 100px; border-radius: 50px 50px 50px 50px; padding: 10px;" alt=""></a>
+            </div>
+            <div class="col-md-1 mt-4 ms-5 p-2">
+                <a href="/" class="nav-link text-center d-flex justify-content-center ms-5"><strong>Home</strong></a>
+            </div>
+            <div class="col-md-1 mt-4 p-2">
+                <a href="" class="nav-link text-center ms-5"><strong>|</strong></a>
+            </div>
+            <div class="col-md-1 mt-4 p-2">
+                <a href="/market" class="nav-link text-center ms-5"><strong>Mart</strong></a>
+            </div>
+            <div class="col-md-1 mt-4 p-2">
+                <a href="" class="nav-link text-center ms-5"><strong>|</strong></a>
+            </div>
+            <div class="col-md-1 mt-4 ms-5 p-2">
+                <a href="/login" class="nav-link text-center float-en"><strong>Login</strong></a>
+            </div>
+            <div class="col-md-1 mt-4 p-2">
+                <a href="" class="nav-link text-center ms-5"><strong>|</strong></a>
+            </div>
+            <div class="col-md-1 ms-5 mt-4 p-2">
+                <a href="/register" class="nav-link text-center float-en"><strong>Register</strong></a>
+            </div>
+        @endauth
     </div>
     <div id="ocean">
         <div class="row">
@@ -80,72 +107,40 @@
             <div class="col-md-8">
                 <div class="postingan card ms-4">
                     <div class="row">
+                        @foreach ($market as $m)
                         <div class="card ms-4 mt-2 me-1 mb-3" style="width: 16rem;">
-                            <img src="https://source.unsplash.com/1000x1000/?product" style="max-width: 300px; max-height: 300px;" class="card-img-top mt-2" alt="...">
+                            @if ($m->img)
+                            <center>
+                                <img src="{{ asset('/storage/'. $m->img ) }}" class="mt-2" style="width: 210px; height: 210px; border-radius: 20px 20px 20px 20px;">
+                            </center>
+                            @else
+                            <center>
+                                <img class="mt-2" src="../img/not-found.png" style="width: 210px; height: 210px; border-radius: 20px 20px 20px 20px;">
+                            </center>
+                            @endif
                             <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="/detail" class="btn btn-primary">
+                                <h5 class="card-title">{{ $m->product }}</h5>
+                                <p class="card-text">{{ $m->price }}</p>
+                                <a href="/detail/{{ $m->slug }}" class="btn btn-primary">
                                     Detail<i class="bi bi-arrow-right-circle" style="margin-left: 10px;"></i>
                                 </a>
                             </div>
                         </div>
-                        <div class="card ms-4 mt-2 me-1 mb-3" style="width: 16rem;">
-                            <img src="https://source.unsplash.com/1000x1000/?product" style="max-width: 300px; max-height: 300px;" class="card-img-top mt-2" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn btn-primary">
-                                    Detail<i class="bi bi-arrow-right-circle" style="margin-left: 10px;"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="card ms-4 mt-2 me-1 mb-3" style="width: 16rem;">
-                            <img src="https://source.unsplash.com/1000x1000/?product" style="max-width: 300px; max-height: 300px;" class="card-img-top mt-2" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn btn-primary">
-                                    Detail<i class="bi bi-arrow-right-circle" style="margin-left: 10px;"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="card ms-4 mt-2 me-1 mb-3" style="width: 16rem;">
-                            <img src="https://source.unsplash.com/1000x1000/?product" style="max-width: 300px; max-height: 300px;" class="card-img-top mt-2" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn btn-primary">
-                                    Detail<i class="bi bi-arrow-right-circle" style="margin-left: 10px;"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="card ms-4 mt-2 me-1 mb-3" style="width: 16rem;">
-                            <img src="https://source.unsplash.com/1000x1000/?product" style="max-width: 300px; max-height: 300px;" class="card-img-top mt-2" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn btn-primary">
-                                    Detail<i class="bi bi-arrow-right-circle" style="margin-left: 10px;"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="card ms-4 mt-2 me-1 mb-3" style="width: 16rem;">
-                            <img src="https://source.unsplash.com/1000x1000/?product" style="max-width: 300px; max-height: 300px;" class="card-img-top mt-2">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn btn-primary">
-                                    Detail<i class="bi bi-arrow-right-circle" style="margin-left: 10px;"></i>
-                                </a>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
             <div class="col-md-3 ms-5">
                 <div class="informasi card">
-                    <img src="https://source.unsplash.com/1000x1000/?product" style="max-width: 285px; max-height: 285px; margin-left: 10px;" class="card-img-top mt-2">
+                        @if ($detail->img)
+                            <center>
+                                <img src="{{ asset('/storage/'. $detail->img ) }}" class="mt-2" style="width: 210px; height: 210px; border-radius: 20px 20px 20px 20px;">
+                            </center>
+                        @else
+                            <center>
+                                <img class="mt-2" src="../img/not-found.png" style="width: 210px; height: 210px; border-radius: 20px 20px 20px 20px;">
+                            </center>
+                        @endif
                     <div class="row">
                         <div class="col-md-1 ms-3">
                             <p class="mt-3">
@@ -157,7 +152,7 @@
                         </div>
                         <div class="col-md-9">
                             <p class="mt-3">
-                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Porro quisquam, ipsum corporis earum ducimus facere minima, necessitatibus quae incidunt assumenda excepturi fuga, et consequuntur id labore neque sit iste autem?
+                                {{ $detail->information }}
                             </p>
                         </div>
                     </div>
@@ -172,12 +167,12 @@
                         </div>
                         <div class="col-md-9">
                             <p class="mt-3">
-                                90000
+                                {{ $detail->price}}
                             </p>
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <a href="" class="d-flex justify-content-center">
+                        <a href="https://api.whatsapp.com/send/?phone={{ $detail->no_telp }}" class="d-flex justify-content-center">
                             <button class="btn btn-success mb-3">
                                 <i class="bi bi-whatsapp"> WhatsApp</i>
                             </button>
@@ -201,19 +196,19 @@
     }
 
     .navigation{
-        background-image: url(./img/wave-2.svg);
+        background-image: url(../img/wave-2.svg);
     }
 
     .postingan{
         overflow-x: hidden;
         overflow-y: scroll;
-        max-height: 530px;
+        height: 530px;
     }
 
     .informasi{
         overflow-y: scroll;
         overflow-x: hidden;
-        max-height: 530px;
+        height: 530px;
     }
 </style>
 </body>

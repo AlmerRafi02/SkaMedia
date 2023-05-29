@@ -11,32 +11,50 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="d-flex justify-content-center" style="margin-top: 90px;">
+    <div class="d-flex justify-content-center" style="margin-top: 60px;">
         <div class="card col-md-3 mt-3 mb-2 b-bottom">
             <div>
                 <i class="bi bi-person-circle d-flex justify-content-center mt-2 shadow-sm" style="font-size: 80px;"></i>
                 <strong><p class="d-flex justify-content-center fs-3">Register</p></strong>
             </div>
-            <div class="col-md-11">
-                <label for="exampleFormControlInput1" class="form-label ms-3">Username</label>
-                <input type="text" class="form-control ms-3" id="exampleFormControlInput1" placeholder="Username">
-            </div>
-            <div class="col-md-11 mt-3">
-                <label for="exampleFormControlInput1" class="form-label ms-3">Email address</label>
-                <input type="email" class="form-control ms-3" id="exampleFormControlInput1" placeholder="name@example.com">
-            </div>
-            <div class="col-md-11 mt-3">
-                <label for="inputPassword5" class="form-label ms-3">Password</label>
-                <input type="password" id="inputPassword5" class="form-control ms-3" aria-labelledby="passwordHelpBlock">
-            </div>
-            <div class="row mt-4 col-md-12 mb-3">
-                <div class="col-md-3 me-3 ms-auto">
-                    <button type="submit" class="btn btn-primary">Register</button>
+            <form action="/register" method="post">
+                @csrf
+                <div class="col-md-11">
+                    <label for="exampleFormControlInput1" class="form-label ms-3">Username</label>
+                    <input type="text" class="form-control ms-3 @error('name') is-invalid @enderror" name="name" id="exampleFormControlInput1" placeholder="Username" value="{{ old('name') }}">
+                    @error('name')
+                        <div class="invalid-feedback ms-3">
+                            {{ $message }}
+                        </div>
+                    @enderror
                 </div>
-                <div class="col-md-2" style="margin-right: 30px;">
-                    <button type="button" class="btn btn-danger">Cancel</button>
+                <div class="col-md-11 mt-2">
+                    <label for="exampleFormControlInput1" class="form-label ms-3">Email address</label>
+                    <input type="email" class="form-control ms-3  @error('email') is-invalid @enderror " name="email" id="exampleFormControlInput1" placeholder="name@example.com" value="{{ old('email') }}">
+                    @error('email')
+                        <div class="invalid-feedback ms-3">
+                            {{ $message }}
+                        </div>
+                    @enderror
                 </div>
-            </div>
+                <div class="col-md-11 mt-2">
+                    <label for="inputPassword5" class="form-label ms-3">Password</label>
+                    <input type="password" id="inputPassword5" name="password" class="form-control ms-3 @error('password') is-invalid @enderror" aria-labelledby="passwordHelpBlock">
+                    @error('password')
+                        <div class="invalid-feedback ms-3">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+                <div class="row mt-4 col-md-12 mb-3">
+                    <div class="col-md-3 me-3 ms-auto">
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </div>
+                    <div class="col-md-2" style="margin-right: 30px;">
+                        <button type="button" class="btn btn-danger">Cancel</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
     <style>

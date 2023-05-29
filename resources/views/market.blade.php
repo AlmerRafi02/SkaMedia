@@ -13,32 +13,60 @@
 </head>
 <body>
     <div class="navigation row border-bottom">
-        <div class="col-md-2">
-            <a href="" class="navbar-brand float-start ms-5"><img src="../img/smk-pgri.jpg" style="width: 100px; height: 100px; border-radius: 50px 50px 50px 50px; padding: 10px;" alt=""></a>
-        </div>
-        <div class="col-md-1 mt-4 ms-5 p-2">
-            <a href="/" class="nav-link text-center d-flex justify-content-center ms-5"><strong>Home</strong></a>
-        </div>
-        <div class="col-md-1 mt-4 p-2">
-            <a href="" class="nav-link text-center ms-5"><strong>|</strong></a>
-        </div>
-        <div class="col-md-1 mt-4 p-2">
-            <a href="/market" class="nav-link text-center ms-5"><strong>Mart</strong></a>
-        </div>
-        <div class="col-md-1 mt-4 p-2">
-            <a href="" class="nav-link text-center ms-5"><strong>|</strong></a>
-        </div>
-        <div class="col-md-1 mt-4 ms-5 p-2">
-            <a href="/login" class="nav-link text-center float-en"><strong>Login</strong></a>
-        </div>
-        <div class="col-md-1 mt-4 p-2">
-            <a href="" class="nav-link text-center ms-5"><strong>|</strong></a>
-        </div>
-        <div class="col-md-1 ms-5 mt-4 p-2">
-            <a href="/register" class="nav-link text-center float-en"><strong>Register</strong></a>
-        </div>
+        @auth
+            <div class="col-md-2">
+                <a href="" class="navbar-brand float-start ms-5"><img src="../img/smk-pgri.jpg" style="width: 100px; height: 100px; border-radius: 50px 50px 50px 50px; padding: 10px;" alt=""></a>
+            </div>
+            <div class="col-md-1 mt-4 p-2" style="margin-left: 9rem;">
+                <a href="/" class="nav-link text-center d-flex justify-content-center ms-5"><strong>Home</strong></a>
+            </div>
+            <div class="col-md-1 mt-4 p-2">
+                <a href="" class="nav-link text-center ms-5"><strong>|</strong></a>
+            </div>
+            <div class="col-md-1 mt-4 p-2">
+                <a href="/market" class="nav-link text-center ms-5"><strong>Mart</strong></a>
+            </div>
+            <div class="col-md-1 mt-4 p-2">
+                <a href="" class="nav-link text-center ms-5"><strong>|</strong></a>
+            </div>
+            <div class="col-md-2 mt-4 p-2">
+                <a href="/mypost" class="nav-link text-center ms-5"><strong>Hallo, {{ auth()->user()->name }}</strong></a>
+            </div>
+            <div class="col-md-2 mt-3 p-2" style="margin-left: 3rem;">
+                <form action="/logout" method="post">
+                    @csrf
+                    <button type="submit" class="btn btn-danger float-end" style="border: none;"><strong>Logout <i class="bi bi-box-arrow-right"></i></strong></button>
+                </form>
+            </div>
+        @else
+            <div class="col-md-2">
+                <a href="" class="navbar-brand float-start ms-5"><img src="../img/smk-pgri.jpg" style="width: 100px; height: 100px; border-radius: 50px 50px 50px 50px; padding: 10px;" alt=""></a>
+            </div>
+            <div class="col-md-1 mt-4 ms-5 p-2">
+                <a href="/" class="nav-link text-center d-flex justify-content-center ms-5"><strong>Home</strong></a>
+            </div>
+            <div class="col-md-1 mt-4 p-2">
+                <a href="" class="nav-link text-center ms-5"><strong>|</strong></a>
+            </div>
+            <div class="col-md-1 mt-4 p-2">
+                <a href="/market" class="nav-link text-center ms-5"><strong>Mart</strong></a>
+            </div>
+            <div class="col-md-1 mt-4 p-2">
+                <a href="" class="nav-link text-center ms-5"><strong>|</strong></a>
+            </div>
+            <div class="col-md-1 mt-4 ms-5 p-2">
+                <a href="/login" class="nav-link text-center float-en"><strong>Login</strong></a>
+            </div>
+            <div class="col-md-1 mt-4 p-2">
+                <a href="" class="nav-link text-center ms-5"><strong>|</strong></a>
+            </div>
+            <div class="col-md-1 ms-5 mt-4 p-2">
+                <a href="/register" class="nav-link text-center float-en"><strong>Register</strong></a>
+            </div>
+        @endauth
     </div>
     <div id="ocean">
+        @auth
         <div class="row">
             <div class="col-md-4">
                 <div class="input-group w-100 mb-3 ms-5 mt-3">
@@ -53,7 +81,7 @@
             <div class="col-md-4 ms-5">
                 <div class="row">
                     <div class="card w-25 mt-3" style="height: 40px;">
-                        <a href="/market/upload" class="text-decoration-none text-dark">
+                        <a href="/market/upload/create" class="text-decoration-none text-dark">
                             <center>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-upload float-start mt-2" viewBox="0 0 16 16">
                                     <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
@@ -77,70 +105,42 @@
                 </div>
             </div>
         </div>
+        @else
+        <div class="col-md-6 ms-5">
+            <div class="input-group w-100 mb-3 ms-5 mt-3">
+                <input type="text" class="form-control ms-5 w-80" placeholder="Produk" aria-label="Recipient's username" aria-describedby="button-addon2">
+                <button class="btn btn-outline-primary me-2" type="submit" id="button-addon2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        @endauth
         <div class="row">
             <div class="col-md-8">
                 <div class="postingan card ms-4">
                     <div class="row">
+                        @foreach ($market as $m)
                         <div class="card ms-4 mt-2 me-1 mb-3" style="width: 16rem;">
-                            <img src="https://source.unsplash.com/1000x1000/?product" style="max-width: 300px; max-height: 300px;" class="card-img-top mt-2" alt="...">
+                            @if ($m->img)
+                            <center>
+                                <img src="{{ asset('/storage/'. $m->img ) }}" class="mt-2" style="width: 210px; height: 210px; border-radius: 20px 20px 20px 20px;">
+                            </center>
+                            @else
+                            <center>
+                                <img class="mt-2" src="../img/not-found.png" style="width: 210px; height: 210px; border-radius: 20px 20px 20px 20px;">
+                            </center>
+                            @endif
                             <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="/detail" class="btn btn-primary">
+                                <h5 class="card-title">{{ $m->product }}</h5>
+                                <p class="card-text">{{ $m->price }}</p>
+                                <a href="/detail/{{ $m->slug }}" class="btn btn-primary">
                                     Detail<i class="bi bi-arrow-right-circle" style="margin-left: 10px;"></i>
                                 </a>
                             </div>
                         </div>
-                        <div class="card ms-4 mt-2 me-1 mb-3" style="width: 16rem;">
-                            <img src="https://source.unsplash.com/1000x1000/?product" style="max-width: 300px; max-height: 300px;" class="card-img-top mt-2" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn btn-primary">
-                                    Detail<i class="bi bi-arrow-right-circle" style="margin-left: 10px;"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="card ms-4 mt-2 me-1 mb-3" style="width: 16rem;">
-                            <img src="https://source.unsplash.com/1000x1000/?product" style="max-width: 300px; max-height: 300px;" class="card-img-top mt-2" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn btn-primary">
-                                    Detail<i class="bi bi-arrow-right-circle" style="margin-left: 10px;"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="card ms-4 mt-2 me-1 mb-3" style="width: 16rem;">
-                            <img src="https://source.unsplash.com/1000x1000/?product" style="max-width: 300px; max-height: 300px;" class="card-img-top mt-2" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn btn-primary">
-                                    Detail<i class="bi bi-arrow-right-circle" style="margin-left: 10px;"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="card ms-4 mt-2 me-1 mb-3" style="width: 16rem;">
-                            <img src="https://source.unsplash.com/1000x1000/?product" style="max-width: 300px; max-height: 300px;" class="card-img-top mt-2" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn btn-primary">
-                                    Detail<i class="bi bi-arrow-right-circle" style="margin-left: 10px;"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="card ms-4 mt-2 me-1 mb-3" style="width: 16rem;">
-                            <img src="https://source.unsplash.com/1000x1000/?product" style="max-width: 300px; max-height: 300px;" class="card-img-top mt-2" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn btn-primary">
-                                    Detail<i class="bi bi-arrow-right-circle" style="margin-left: 10px;"></i>
-                                </a>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -214,7 +214,7 @@
     .postingan{
         overflow-x: hidden;
         overflow-y: scroll;
-        max-height: 530px;
+        height: 530px;
     }
 </style>
 </body>

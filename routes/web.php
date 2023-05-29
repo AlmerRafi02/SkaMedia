@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminUserResource;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LayoutController;
 use App\Http\Controllers\MarketResource;
@@ -21,14 +22,22 @@ Route::get('/', [LayoutController::class, 'home']);
 
 Route::get('/market', [LayoutController::class, 'market']);
 
-Route::get('/detail', [LayoutController::class, 'detail']);
+Route::get('/detail/{market:slug}', [LayoutController::class, 'detail']);
 
-Route::get('/mypost', [LayoutController::class, 'mypost']);
+Route::get('/mypost', [LayoutController::class, 'mypost'])->middleware('auth');
 
-Route::get('/login', [AuthController::class, 'index']);
+Route::get('/login', [AuthController::class, 'index'])->middleware('guest');
 
-Route::get('/register', [AuthController::class, 'index2']);
+Route::post('/login', [AuthController::class, 'authenticate'])->middleware('guest');
 
-Route::resource('/news/upload', NewsResource::class);
+Route::get('/register', [AuthController::class, 'index2'])->middleware('guest');
 
-Route::resource('/market/upload', MarketResource::class);
+Route::post('/register', [AuthController::class, 'store'])->middleware('guest');
+
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth');
+
+Route::resource('/news/upload', NewsResource::class)->middleware('auth');
+
+Route::resource('/market/upload', MarketResource::class)->middleware('auth');
+
+Route::resource('/admin/user', AdminUserResource::class)->middleware('auth')->middleware('admin');

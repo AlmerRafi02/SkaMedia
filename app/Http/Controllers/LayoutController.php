@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Market;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class LayoutController extends Controller
@@ -9,28 +11,33 @@ class LayoutController extends Controller
     public function home() 
     {
         return view ('home', [
-            'title' => 'SkaMedia'
+            'title' => 'SkaMedia',
         ]);
     }
 
     public function market()
     {
         return view('market', [
-            'title' => 'SkaMedia'
+            'title' => 'SkaMedia',
+            'market' => Market::latest()->get()
         ]);
     }
 
-    public function detail()
+    public function detail(Market $market)
     {
         return view('detail', [
-            'title' => 'SkaMedia'
+            'title' => 'SkaMedia',
+            'detail' => $market,
+            'market' => Market::latest()->get()
         ]);
     }
 
-    public function mypost()
+    public function mypost(User $user)
     {
         return view('mypost', [
-            'title' => 'SkaMedia'
+            'title' => 'SkaMedia',
+            'profile' => $user,
+            'market' => Market::where('user_id', auth()->user()->id)->get()
         ]);
     }
 }
